@@ -33,12 +33,32 @@ let rec string_of_ty = function
 type ident = Ident of string
 
 type value =
-  | V
+  | Int of int
+  | Bool of bool
+  | Var of ident
+  | Lambda of abs
+  | RecLambda of (ident * abs)
+  | Unit
 
 and abs = ident * cmp
 
 and cmp =
-  | C
+  | Plus of value * value
+  | Minus of value * value
+  | Times of value * value
+  | Less of value * value
+  | Greater of value * value
+  | Equal of value * value
+  | IfThenElse of value * cmp * cmp
+  | Apply of value * value
+  | Let of cmp * abs
+  | Return of value
+  | Raise of ident
+  | Try of cmp * cmp
+  | Assign of ident * value
+  | Read of ident
+  | Print of value
+
 
 (* let let_in (x, e1, e2) = Apply (Lambda (x, e2), e1)
 

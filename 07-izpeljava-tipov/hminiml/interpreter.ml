@@ -40,8 +40,18 @@ let eval_int_v = function S.Int x -> x | _ -> failwith "expected int"
 
 let rec eval_cmp (state : state) (cmp : S.cmp) : result =
   let st v = empty_print (state, S.Return v) in
-  (* match cmp with *)
-  failwith "TODO"
+  match cmp with
+  | Plus (v1, v2) -> (
+    let a = eval_int_v v1 and b = eval_int_v v2 in
+    (state, S.Return (S.Int ( a + b )), []))
+  | Let (c1, (x, c2)) -> failwith "TODO"
+  | IfThenElse (b, c1, c2) -> (
+    match b with
+    | S.Bool true -> (* c1 *)
+    | S.Bool false -> (* c2 *)
+    | _ -> failwith "Not a bool"
+  )
+  | _ -> failwith "TODO"
 
 let rec step (state : state) cmp =
   (* match cmp with *)
